@@ -12,5 +12,5 @@
         die("Connection failed: " . $dbconn->connect_error);
     } 
     mysqli_set_charset($dbconn,"utf8");
-    echo "<script>console.log('Connected successfully');</script>";
+    // echo "<script>console.log('Connected successfully');</script>";
 ?>

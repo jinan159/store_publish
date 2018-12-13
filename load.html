@@ -1,0 +1,72 @@
+<div class="container-fluid list-title">
+    <h2 class="list-title">메뉴 추가</h2>
+</div>
+<form action="../process/p_insert.php?mode=c" method="POST" enctype="multipart/form-data">
+    <table class="table" style="width:100%">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">메뉴 사진</th>
+                <td>
+                    <div>
+                        <span>이미지 파일만(최대 2MB)</span>
+                    </div><!-- 메뉴 사진  -->
+                    <div>
+                        <input type="file" name="menuImg" id="menu-img">
+
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="col">메뉴 이름</th>
+            </tr>
+            <tr>
+                <th scope="col">가격</th>
+            </tr>
+            <tr>
+                <th scope="col">메뉴 설명(옵션)</th>
+            </tr>
+            <tr>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div>
+                        <span>이미지 파일만(최대 2MB)</span>
+                    </div><!-- 메뉴 사진  -->
+                    <div>
+                        <input type="file" name="menuImg" id="menu-img">
+
+                    </div>
+                </td>
+                <td>
+                    <!-- 메뉴 이름  -->
+                    <div class="input-group mb-3">
+                        <!-- <div class="input-group-prepend">
+                    <span class="input-group-text text-danger" id="namen">사용불가</span>
+                    <span class="input-group-text text-success" id="namey">사용가능</span>
+                  </div> -->
+                        <input type="text" onkeydown="nameconfirm();" onkeyup="nameconfirm();" id="menu-name" name="menuName">
+                    </div>
+                </td><!-- 메뉴 가격  -->
+                <td>
+                    <div>
+                        <input type="number" name="menuPrice" id="menu-price">
+                    </div>
+                </td>
+                <td>
+                    <!-- 메뉴 설명  -->
+                    <div>
+                        <input type="text" name="menuCmt" id="menu-cmt">
+                    </div>
+                </td>
+                <td>
+                    <div style="width:50px">
+                        <button type="submit" onclick="return addCategory();">추가</button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>

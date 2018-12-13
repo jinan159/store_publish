@@ -90,12 +90,17 @@
     </form>
     
   </div>
+  <!-- 전화번호 11자리 입력 -->
   <script>
     function maxLengthCheck(object){
       if (object.value.length > object.maxLength){
         object.value = object.value.slice(0, object.maxLength);
       }    
     }
+  </script>
+
+    <!-- 이메일 로그인 체크 -->
+  <script>
   //email login form check
   function email_loginChk() {
     
@@ -148,8 +153,10 @@
     }
   });
   //~ email login form check
-
+  </script>
   
+  <!-- 이메일 가입 체크 -->
+  <script>
   function email_signupChk() {
     if($("#es-email").val() == "") {
       alert('아이디를 입력하세요.');
@@ -188,10 +195,11 @@
     }else {
       $("#pwChk_str").html("");
     }    
-  }
-  
-    
+  } 
   </script>
+
+
+
   <script src="js/login.js"></script>
 
   <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>

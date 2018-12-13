@@ -16,24 +16,19 @@
     ?>  
     <div class="login-box">
         <div class="lb-header">
-            <a>사업장 등록</a>
+            <a>점포 등록</a>
         </div>
-        <form class="email-signup" action="process/user.php?mode=owner" method="post">
+        <form class="email-signup" action="process/signup_store.php" method="post">
             <div class="u-form-group">
-                <input type="email" placeholder="이메일" id="owner-email" name="email"/>
+                <input type="text" placeholder="점포 이름" id="owner-sname" name="sname"/><br>
+                <!-- <span>공백이 없어야 합니다.</span> -->
+            </div>       
+            <div class="u-form-group">
+                <input type="number" placeholder="사업장 전화번호(-없이)" oninput="maxLengthCheck(this)" maxlength="11" id="owner-tel" name="stel"/>
             </div>
             <div class="u-form-group">
-                <input type="password" onkeydown="pwCheck();" onkeyup="pwCheck();" placeholder="비밀번호" id="owner-pw" name="password"/>
-            </div>
-            <div class="u-form-group">
-                <input type="password" onkeydown="pwCheck();" onkeyup="pwCheck();" id="owner-pwChk" placeholder="비밀번호 확인"/>
-            </div>
-            <p id="pwChk_str" style="color:red;"> </p>
-            <div class="u-form-group">
-                <input type="text" id="owner-name" placeholder="이름" name="name" />
-            </div>
-            <div class="u-form-group">
-                <input type="text" id="owner-ematelil" placeholder="전화번호" name="tel"/>
+                <input type="text" id="owner-address" placeholder="주 영업 지역" name="location"/>
+                <!-- 나중에 data.go.kr 도로명 주소 구현-->
             </div>
             <div class="u-form-group">
             <!-- Business registration number : brnum -->
@@ -44,18 +39,12 @@
                 <input type="text" id="owner-car_num" placeholder="(선택)푸드트럭 차량번호" name="car_num"/>
             </div>
             <div class="u-form-group">
-                <input type="text" id="owner-address" placeholder="(선택) 주소" name="address"/>
-                <!-- 나중에 data.go.kr 도로명 주소 구현-->
+                <input type="submit" onclick="return store_regCheck();" value="점포등록 신청">
             </div>
             <div class="u-form-group">
-                <input type="hidden" name="grant" value="manager"/>
-            </div>
-            
-            <div class="u-form-group">
-                <a href='login.php'><b>일반 회원 가입으로</b></a>
-            </div>
-            <div class="u-form-group">
-                <input type="submit" onclick="return email_signupChk();" value="Sign Up">
+                <hr>
+                <br>
+                <a href='index.php'><b>이전으로</b></a>
             </div>
         </form>
     </div>
@@ -65,28 +54,12 @@
                 object.value = object.value.slice(0, object.maxLength);
             }    
         }
-        function email_signupChk() {
-            if($("#owner-email").val() == "") {
-                alert('아이디를 입력하세요.');
-                return false;
-            }
-            if($("#owner-pw").val() == "") {
-                alert('비밀번호를 입력해 주세요');
-                return false;
-            }
-            if($("#owner-pw").val() != $("#owner-pwChk").val()) {
-                alert('비밀번호가 다릅니다.');
-                return false;
-            }
-            if($("#owner-name").val() == "") {
-                alert('이름 입력해 주세요');
-                return false;
-            }
+        function store_regCheck() {
             if($("#owner-tel").val() == "") {
                 alert('전화번호를 입력해 주세요');
                 return false;
             }
-            if($("#owner-tel").val().length < 11) {
+            if($("#owner-tel").val().length < 10) {
                 alert('전화번호를 정확히 입력해 주세요');
                 return false;
             }
@@ -94,6 +67,12 @@
                 alert('사업자 번호를 입력해 주세요');
                 return false;
             }
+            if($("#owner-brnum").val().length != 10) {
+                alert('사업자 번호를 정확히 주세요');
+                return false;
+            }
+
+            // $('#owner-sname').val() = allTrim($('#owner-sname').val());
         }
 
         function pwCheck() {
@@ -103,6 +82,15 @@
                 $("#pwChk_str").html("");
             }    
         }
+    </script>
+    <script>
+        function allTrim(str) {
+            return str.replace(/(\s*)/g,"");
+        }   
+        /*
+            form안에 input을 document.getElementsByTagName으로 선택
+            for문돌리기. 
+        */
     </script>
 </body>
 </html>

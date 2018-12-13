@@ -12,7 +12,7 @@ body {
 .menu {
   text-align: center;
   padding-top: 25px;
-  margin-bottom: 100px;
+  margin-bottom: 50px;
 }
 
 .menu .arrow {
@@ -34,29 +34,49 @@ body {
 
 .menu h2 {
   color: rgb(0, 2, 100);
+  font-size: 15px;
 }
 
 .menu h2 a {
-  color: inherit;
+  color:rgb(50, 52, 156);
   text-decoration: none;
   display: inline-block;
-  border: 1px solid rgb(0, 2, 100);
+  border: 1px solid rgb(50, 52, 156);
   padding: 10px 15px;
   border-radius: 3px;
-  font: bold 14px/1 'Open Sans', sans-serif;
+  font: bold 12px/1 'Open Sans', sans-serif;
   text-transform: uppercase;
 }
 
+
 .menu h2 a:hover {
-  background-color: rgb(190, 0, 0);
+  background-color: rgb(50, 52, 156);
   transition: 0.2s;
-  color: rgb(223, 144, 144);
+  color: rgb(255, 255, 255);
+}
+
+.menu h2 a.alert {
+  color:rgb(180, 65, 94);
+  text-decoration: none;
+  display: inline-block;
+  border: 1px solid rgb(180, 65, 94);
+  padding: 10px 15px;
+  border-radius: 3px;
+  font: bold 12px/1 'Open Sans', sans-serif;
+  text-transform: uppercase;
+}
+
+.menu h2 a.alert:hover {
+  background-color: rgb(180, 65, 94);
+  transition: 0.2s;
+  color: rgb(255, 255, 255);
 }
 
 .main-container {
   margin-left: 300px;
   margin-right:300px;
   max-width: 75%;
+  margin-bottom:100px;
   /* background-color: #0000006c; */
 }
 
@@ -111,8 +131,9 @@ body {
 
 /* The main content */
 .main-content {
+  background-color: #ffffff;
   font-family: Arial, Helvetica, sans-serif;
-  max-width: 600px;
+  max-width: 50%;
   padding-top: 40px;
   padding-left: 200px;
   margin: 0 0 40px 260px;
@@ -188,18 +209,19 @@ body {
   max-height: 0;
   overflow: hidden;
   list-style: none;
-  padding: 0 0 0 30px;
+  padding: 0 0 0 10px;
   color: #b3bcc5;
+  
   font-size: 12px;
   font-weight: bold;
-  line-height: 24px;
+  line-height: 35px;
   margin: 0;
   transition: 0.4s;
 }
 
 .sidebar-links div.selected ul.sub-links {
-  max-height: 150px;
-  padding: 12px 0 12px 30px;
+  max-height: 200px;
+  padding: 12px 0 12px 10px;
 }
 
 .sidebar-links div .sub-links a {
@@ -305,8 +327,14 @@ body {
 /* Smartphone version */
 
 @media (max-width: 450px) {
+  .menu {
+    text-align: center;
+    padding-top: 25px;
+    margin-bottom: 20px;
+  }
   .main-content {
-    padding: 90px 20px;
+    padding: 30px 20px 0;
+    margin:20px;
   }
   .sidebar-left-collapse {
     padding: 20px 0;
@@ -334,7 +362,7 @@ body {
     font-size: 20px;
     width: 20px;
     margin: 0 20px 0 0;
-  }
+  } 
   .sidebar-links div.selected .sub-links {
     bottom: -90px;
   }

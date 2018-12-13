@@ -34,18 +34,16 @@
             </div>
             <div class="u-form-group">
                 <input type="text" id="owner-ematelil" placeholder="전화번호" name="tel"/>
+                <!-- <a href="#" class="a-btn">전화번호 인증</a> -->
             </div>
             <div class="u-form-group">
-            <!-- Business registration number : brnum -->
-                <input type="number" maxlength="10" id="owner-brnum" oninput="maxLengthCheck(this)" placeholder="사업자 번호" name="brnum"/>
-                <!-- 나중에 data.go.kr 이용하여 체크 -->
+                <!-- <input type="text" id="owner-car_num" placeholder="(선택)푸드트럭 차량번호" name="car_num"/> -->
+                회원가입이 완료되고 나면
             </div>
             <div class="u-form-group">
-                <input type="text" id="owner-car_num" placeholder="(선택)푸드트럭 차량번호" name="car_num"/>
-            </div>
-            <div class="u-form-group">
-                <input type="text" id="owner-address" placeholder="(선택) 주소" name="address"/>
+                <!-- <input type="text" id="owner-address" placeholder="(선택) 주소" name="address"/> -->
                 <!-- 나중에 data.go.kr 도로명 주소 구현-->
+                사업자 등록을 해주셔야 합니다.
             </div>
             <div class="u-form-group">
                 <input type="hidden" name="grant" value="manager"/>
