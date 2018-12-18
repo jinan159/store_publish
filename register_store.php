@@ -1,4 +1,6 @@
-<?php session_start ?>
+<?php session_start();
+    if(!isset($_SESSION['s_email'])) echo "<script>location.href='login.php';</script>";
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +9,7 @@
     <title>Page Title</title>
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/login.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/login.css" />
     
 </head>
 <body>
@@ -72,7 +74,7 @@
                 return false;
             }
 
-            // $('#owner-sname').val() = allTrim($('#owner-sname').val());
+            $('#owner-sname').val() = allTrim($('#owner-sname').val());
         }
 
         function pwCheck() {

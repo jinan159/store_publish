@@ -7,17 +7,21 @@
     <title>로그인 페이지 입니다.</title>
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/login.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/login.css" />
     
 </head>
 <body>
+  
   <?php
         if(isset($_SESSION['s_email'])) echo"<script>location.href='index.php'</script>";
     ?>  
   <div class="login-box">
+    <div style="text-align:center; color:#333;">
+      <h2>Web POS</h2>
+    </div>
     <div class="lb-header">
-      <a href="#" class="active" id="login-box-link">Login</a>
-      <a href="#" id="signup-box-link">Sign Up</a>
+      <a href="#" class="active" id="login-box-link">로그인</a>
+      <a href="#" id="signup-box-link">가입</a>
     </div>
 
     <div class="social-login">
@@ -28,7 +32,7 @@
       </form>
       <a id="google_login_btn" href="#">
         <i class="fa fa-google-plus fa-lg"></i>
-        log in with Google
+        Google 로 로그인
       </a>
     </div>
           
@@ -41,7 +45,7 @@
       </form>
       <a id="google_signup_btn" href="#">
         <i class="fa fa-google-plus fa-lg"></i>
-        Sign up with Google
+        Google 로 회원가입
       </a>
     </div>
 
@@ -57,7 +61,7 @@
         <input type="submit" id="email-login-btn" onclick="return email_loginChk()" value="Log in">
       </div>
       <div class="u-form-group">
-        <a href="#" class="forgot-password">Forgot password?</a>
+        <!-- <a href="#" class="forgot-password">Forgot password?</a> -->
       </div>
     </form>
 
@@ -82,7 +86,7 @@
         <input type="text" placeholder="주소"  id="es-address" name="address"/>
       </div>
       <div class="u-form-group">
-        사업자 회원 가입은 <a href='manager_register.php'><b> 여기를 눌러주세요.</b></a>
+        사업자 회원 가입은 <a href='owner_register.php'><b> 여기를 눌러주세요.</b></a>
       </div>
       <div class="u-form-group">
         <input type="submit" onclick="return email_signupChk();" value="Sign Up">
@@ -200,7 +204,7 @@
 
 
 
-  <script src="js/login.js"></script>
+  <script src="assets/js/login.js"></script>
 
   <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>
   <script>

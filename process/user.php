@@ -158,6 +158,7 @@
                     if($row_s = $result->fetch_array()) {
                         $_SESSION['s_store_id'] = $row_s['store_id'];
                         $_SESSION['s_sname'] = $row_s['sname'];
+                        $_SESSION['s_store_confirm'] = $row_s['confirm'];
                     }
 
                     echo "<script>location.href='../index.php';</script>";

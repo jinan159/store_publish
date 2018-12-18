@@ -63,7 +63,7 @@
         // $table_row .= "<td>$price</td>";
         $table_row .= "<td>$user_name</td>";
         if($pre_time!=$time) {
-            $table_row .= "<td><a style='min-width:50px;' href='process/update.php?order_num=$onum' class='submit-btn success'>X</a></td>";
+            $table_row .= "<td><a style='min-width:50px;' href='process/update.php?mode=order&order_num=$onum' class='submit-btn success'>X</a></td>";
             $pre_time = $time;
         }else {
             $table_row .= "<td></td>";

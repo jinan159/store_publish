@@ -4,8 +4,8 @@
     <table id="result"></table>
 </div>
 <script>
-        var source = new EventSource("process/load_cur_order.php");
+        var source = new EventSource("process/load_cur_order.php?");
         source.addEventListener("message",function(e) {
             document.getElementById("result").innerHTML = e.data; 
         });
-    </script>
+</script>

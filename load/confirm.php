@@ -7,8 +7,8 @@
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/order.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/common.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../assets/css/order.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../assets/css/common.css" />
     
 </head>
 <body>
@@ -28,61 +28,123 @@
             // echo $store_id;
             include_once "../process/dbconn.php";
 
-            $sql = " SELECT od.order_num onum, o.order_time time, m.mname mname, od.count count, od.price price, o.isdone isdone";
-            $sql .= " FROM webpos.order_detail od JOIN webpos.order o ";
-            $sql .= " ON (od.order_num=o.order_num) JOIN webpos.menu m ";
-            $sql .= " ON (od.menu_id=m.menu_id) ";
-            $sql .= " WHERE od.order_num='$order_num' ";
-            $sql .= " AND o.isdone='n' ";
-            $sql .= " ORDER BY o.order_time ASC; ";
+            $sql = " SELECT s.sname, o.isdone ";
+            $sql .= " FROM webpos.order o JOIN webpos.store s ";
+            $sql .= " ON o.store_id=s.store_id ";
+            $sql .= " WHERE o.order_num='$order_num' ";           
 
             $result = $dbconn->query($sql);
-            if($result->num_rows<=0) {
-                echo "<script>alert('완료된 주문입니다...'); location.href='../index.php?reload=u-order-his'</script>";
-            }
-            else {
-        ?>
-    <div class="menu">
-        <h1>주문 확인</h1>
-        <table>
-        <tr>
-            <th>대기 순번</th>
-            <td colspan="2"><span id="result"></span></td>
-        </tr>
-        <tr>
-            <th>주문 번호</th>
-            <td colspan="2"><?=$order_num?></td>
-        </tr>
-        <tr>
-            <th colspan="3">주문 내역</th>
-        </tr>
-        <tr>
-            <th>시간</th>
-            <th>메뉴이름</th>
-            <th>수량</th>
-        </tr>
-        <?php
-            
-            
-                while ($row=$result->fetch_array()) { 
-                ?>
+            $row_chk = $result->fetch_array();
+            $isdone = $row_chk['isdone'];
+            if($isdone=='y') {
+               echo "<div style='text-align:center; color:red;'><h3>완료된 주문</h3></div>"
+            ?>
+            <div class="menu">
+                <h1>주문 확인</h1>
+                <table align="center">
+                    <?php
+                        $sql = " SELECT o.email, u.name name "; 
+                        $sql .= " FROM webpos.order o JOIN webpos.user u ";
+                        $sql .= " ON (o.email = u.email) ";
+                        $sql .= " WHERE o.order_num='$order_num' ";
+
+                        $result = $dbconn->query($sql);
+                        
+                        $row = $result->fetch_array();
+                    ?>
+                    <tr>
+                        <th>점포명</th>
+                        <td colspan="2"><?=$row_chk['sname']?></td>
+                    </tr>
+                    <tr>
+                        <th>주문자</th>
+                        <td colspan="2"><?=$row['email']?><br>(<?=$row['name']?>)</td>
+                    </tr>
+                    <tr>
+                        <th>주문 번호</th>
+                        <td colspan="2"><?=$order_num?></td>
+                    </tr>
+                    <tr>
+                        <th colspan="3">주문 내역</th>
+                    </tr>
+                    <tr>
+                        <th>시간</th>
+                        <th>메뉴이름</th>
+                        <th>수량</th>
+                    </tr>
+                    <?php
+
+                    $sql = " SELECT od.order_num onum, o.order_time time, m.mname mname, od.count count, od.price price, o.email email";
+                    $sql .= " FROM webpos.order_detail od JOIN webpos.order o ";
+                    $sql .= " ON (od.order_num=o.order_num) JOIN webpos.menu m ";
+                    $sql .= " ON (od.menu_id=m.menu_id) ";
+                    $sql .= " WHERE od.order_num='$order_num' ";
+                    $sql .= " ORDER BY o.order_time ASC; ";
+
+                    $result = $dbconn->query($sql);
+
+                    while ($row=$result->fetch_array()) { 
+                    ?>
                     <tr>
                         <td><?=$row['time']?></td>
                         <td><?=$row['mname']?></td>
                         <td><?=$row['count']?></td>
                     </tr>
-                <?php
-                }
+                    <?php
+                    }
+                    ?>
+                </table>
+            </div>
+            <?php
             }
-        ?>
-        
-        </table>
-
-        
-    </div>
-    <div style="text-align:center; margin:50px 0;">
-        <a href="../index.php" class="submit-btn secondary">메인으로 돌아가기</a>
-    </div>
+            else {
+            ?>
+            <div class="menu">
+                <h1>주문 확인</h1>
+                <table>
+                    <tr>
+                        <th>대기 순번</th>
+                        <td colspan="2"><span id="result"></span></td>
+                    </tr>
+                    <tr>
+                        <th>주문자</th>
+                        <td colspan="2"><?=$row['email']?></td>
+                    </tr>
+                    <tr>
+                        <th>주문 번호</th>
+                        <td colspan="2"><?=$order_num?></td>
+                    </tr>
+                    <tr>
+                        <th colspan="3">주문 내역</th>
+                    </tr>
+                    <tr>
+                        <th>시간</th>
+                        <th>메뉴이름</th>
+                        <th>수량</th>
+                    </tr>
+                    <?php
+                    while ($row=$result->fetch_array()) { 
+                    ?>
+                    <tr>
+                        <td><?=$row['time']?></td>
+                        <td><?=$row['mname']?></td>
+                        <td><?=$row['count']?></td>
+                    </tr>
+                    <?php
+                    }
+                    ?>
+                </table>
+            </div>
+            <?php
+            }
+            ?>            
+            <?php
+                $from = $_GET['from'];
+            ?>
+        <div style="text-align:center; margin:50px 0;">
+            <a href="../index.php" class="submit-btn secondary">메인으로 돌아가기</a>
+            <a href="../index.php?reload=<?=$from?>" class="submit-btn secondary">이전으로</a>
+        </div>
     <script>
         var source = new EventSource("../process/load_cur_wait.php?order_num=<?=$order_num?>&store_id=<?=$store_id?>");
         source.addEventListener("message",function(e) {

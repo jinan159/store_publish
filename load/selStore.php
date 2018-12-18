@@ -7,8 +7,8 @@
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/order.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/common.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../assets/css/order.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../assets/css/common.css" />
     
 </head>
 <body>
