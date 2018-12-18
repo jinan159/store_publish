@@ -61,9 +61,23 @@
                                     // $row;
                                     if(isset($_GET['mode'])) {
                                         
+                                        
+                                        
                                         $mode = $_GET['mode'];
-                                        if($mode=="owner") {
+                                        if($mode=='SiteAdmin') $mode="user";
+
+                                        if($mode=="owner") {                    //사업자
+                                            
                                             $email = $_GET['email'];
+                                            $s_email = $_SESSION['s_email'];
+                                            //관리자가 아닌사람이 자신의 아이디가 아닌 아이디로 
+                                            // 접근하려할때 막음
+                                            if($email!=$s_email) {
+                                                if(!isset($_SESSION['s_grade']) || $_SESSION['s_grade']!=99) {
+                                                    echo "<script>alert('비정상적인 접근입니다.');</script>";
+                                                    echo "<script>location.href='index.php';</script>";
+                                                }
+                                            }
 
                                             $sql = " SELECT * FROM webpos.owner "; 
                                             $sql .= " WHERE email='$email';" ;
@@ -80,32 +94,37 @@
                                             ?>
                                             <div>
                                                 <div>
+                                                    <form action="process/update.php?mode=owner"  method="post">
                                                     <table>
                                                         <tr>
                                                             <td>아이디</td>
-                                                            <td><input type="text"  name="mem_pw" id="mem_id" value="<?= $row['email'] ?>"></td>
+                                                            <td><p><?= $row['email']?></p><input type="hidden" name="email" id="email" value="<?= $row['email']?>"></td>
                                                         </tr>
                                                         <tr>
                                                             <td >비밀번호</td>
-                                                            <td><input type="password" disabled name="mem_pw" id="mem_pw" value="<?= $row['password'] ?>"></td>
+                                                            <td>
+                                                                <input type="password" disabled name="password" id="password" value="<?= $row['password'] ?>">
+                                                                <input type="button" onclick="resetPassword();" class="button small" value="초기화">
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td>이름</td>
-                                                            <td><input type="email"  name="mem_pw" id="mem_email" value="<?= $row['oname'] ?>"></td>
+                                                            <td><input type="text"  name="oname" id="mem_email" value="<?= $row['oname'] ?>"></td>
                                                         </tr>
                                                         <tr>
                                                             <td>전화번호</td>
-                                                            <td><input type="email"  name="mem_pw" id="mem_phone" value="<?= $row['tel'] ?>"></td>
+                                                            <td><input type="text"  name="tel" id="mem_phone" value="<?= $row['tel'] ?>"></td>
                                                         </tr>
                                                         <tr>
                                                             <td>주소</td>
-                                                            <td><input type="email"  name="mem_pw" id="mem_phone" value="<?= $row['address'] ?>"></td>
+                                                            <td><input type="text"  name="address" id="mem_phone" value="<?= $row['address'] ?>"></td>
                                                         </tr>
                                                     </table>        
                                                     <div style="text-align: center">
-                                                        <div><button class="button">수정</button>
+                                                        <div><input type="submit" class="button" value="수정">
                                                         <button class="button">취소</button></div>
                                                     </div>
+                                                    </form>
                                                 </div>
                                                 <div>
                                                     <table>
@@ -164,8 +183,17 @@
                                             <?php
 
                                         }// if($mode=="owner")
-                                        else if ($mode=="user") {
+                                        else if ($mode=="user") {                    //일반 회원
                                             $email = $_GET['email'];
+                                            $s_email = $_SESSION['s_email'];
+                                            //관리자가 아닌사람이 자신의 아이디가 아닌 아이디로 
+                                            // 접근하려할때 막음
+                                            if($email!=$s_email) {
+                                                if(!isset($_SESSION['s_grade']) || $_SESSION['s_grade']!=99) {
+                                                    echo "<script>alert('비정상적인 접근입니다.');</script>";
+                                                    echo "<script>location.href='index.php';</script>";
+                                                }
+                                            }
 
                                             $sql = " SELECT * FROM webpos.user "; 
                                             $sql .= " WHERE email='$email';" ;
@@ -182,39 +210,139 @@
                                             ?>
                                             <div>
                                                 <div>
+                                                    <form action="process/update.php?mode=user" onsubmit="" method="post">
                                                     <table>
                                                         <tr>
                                                             <td>아이디</td>
-                                                            <td><input type="text"  name="mem_pw" id="mem_id" value="<?= $row['email'] ?>"></td>
+                                                            <td><p><?= $row['email']?></p><input type="hidden" name="email" id="email" value="<?= $row['email']?>"></td>
                                                         </tr>
                                                         <tr>
                                                             <td >비밀번호</td>
-                                                            <td><input type="password" disabled name="mem_pw" id="mem_pw" value="<?= $row['password'] ?>"></td>
+                                                            <td>
+                                                                <input type="password" disabled name="password" id="password" value="<?= $row['password'] ?>">
+                                                                <input type="button" onclick="resetPassword();" class="button small" value="초기화">
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td>이름</td>
-                                                            <td><input type="email"  name="mem_pw" id="mem_email" value="<?= $row['name'] ?>"></td>
+                                                            <td><input type="text"  name="name" id="name" value="<?= $row['name'] ?>"></td>
                                                         </tr>
                                                         <tr>
                                                             <td>전화번호</td>
-                                                            <td><input type="email"  name="mem_pw" id="mem_phone" value="<?= $row['tel'] ?>"></td>
+                                                            <td><input type="text"  name="tel" id="tel" value="<?= $row['tel'] ?>"></td>
                                                         </tr>
                                                         <tr>
                                                             <td>주소</td>
-                                                            <td><input type="email"  name="mem_pw" id="mem_phone" value="<?= $row['address'] ?>"></td>
+                                                            <td><input type="text"  name="address" id="address" value="<?= $row['address'] ?>"></td>
                                                         </tr>
+                                                        
                                                     </table>        
                                                     <div style="text-align: center">
-                                                        <div><button class="button">수정</button>
+                                                        <div><input type="submit" class="button" value="수정">
                                                         <button class="button">취소</button></div>
                                                     </div>
-                                                    
+                                                    </form>
+                                                    </div>
+                                                    <div>
+                                                    <?php
+                                                        $email = $row['email'];
+                                                        include "process/dbconn.php";
+
+                                                        include "process/detectDevice.php";                                                        
+
+                                                        if(detectDevice()!="Mobile") {
+                                                            $sql = " SELECT od.order_num onum, o.order_time time, s.store_id sid,s.sname sname, m.mname mname, od.count count, od.price price, o.email email, o.isdone isdone";
+                                                            $sql .= " FROM webpos.order_detail od JOIN webpos.order o ";
+                                                            $sql .= " ON (od.order_num=o.order_num) JOIN webpos.store s ";
+                                                            $sql .= " ON (o.store_id=s.store_id) JOIN webpos.menu m ";
+                                                            $sql .= " ON (od.menu_id=m.menu_id) ";
+                                                            $sql .= " WHERE o.email='$email' ";
+                                                            $sql .= " ORDER BY o.order_time DESC; ";
+
+                                                            $result = $dbconn->query($sql);
+
+                                                            ?>
+                                                            <table>
+                                                                <tr>
+                                                                    <th>가게이름</th>
+                                                                    <th>주문번호(대기순번 확인)</th>
+                                                                    <th>주문시간</th>
+                                                                    <th>메뉴이름</th>
+                                                                    <th>수량</th>
+                                                                    <th>가격</th>
+                                                                </tr>
+                                                                <?php
+                                                                    $pre_onum = "";
+                                                                    while($row=$result->fetch_array()) {
+                                                                        $onum = $row['onum'];
+                                                                ?>  
+                                                                    <tr>
+                                                                    <?php
+
+
+                                                                        if($pre_onum!=$onum) {
+                                                                    ?>
+                                                                        <td><?=$row['sname']?></td>
+                                                                        <td><a href="load/confirm.php?order_num=<?=$row['onum']?>" target="new"><?=$row['onum']?></a></td>    
+                                                                    <?php
+                                                                        $pre_onum=$onum;
+                                                                        }else {
+                                                                            echo "<td></td>";
+                                                                            echo "<td></td>";
+                                                                        }
+                                                                    ?>
+                                                                        
+                                                                        <td><?=$row['time']?></td>
+                                                                        <td><?=$row['mname']?></td>
+                                                                        <td><?=$row['count']?></td>
+                                                                        <td><?=$row['price']?></td>
+                                                                    </tr>
+                                                                <?php
+                                                                    }
+                                                                ?>
+                                                            </table>
+                                                            <?php
+                                                        }else {
+                                                            $sql = " SELECT o.order_num onum, o.order_time time, s.sname sname";
+                                                            $sql .= " FROM webpos.order o JOIN webpos.store s ";
+                                                            $sql .= " ON (o.store_id=s.store_id)";
+                                                            $sql .= " WHERE o.email='$email' ";
+                                                            $sql .= " ORDER BY o.order_time DESC; ";
+
+                                                            $result = $dbconn->query($sql);
+                                                            ?>
+                                                            
+                                                            <table>
+                                                                <tr>
+                                                                    <th>가게이름 </th>
+                                                                    <th>주문시간</th>
+                                                                    <th>상세확인</th>
+                                                                </tr>
+                                                                <?php
+                                                                    $pre_onum = "";
+                                                                    while($row=$result->fetch_array()) {
+                                                                        $onum = $row['onum'];
+                                                                ?>  
+                                                                <tr>
+                                                                    <td><?=$row['sname']?></td>
+                                                                    <td><?=$row['time']?></td>
+                                                                    <td><a href="load/confirm.php?order_num=<?=$row['onum']?>" target="new">확인 (새창)</a></td>    
+                                                                </tr>
+                                                                <?php
+                                                                    }
+                                                                ?>
+                                                            </table>
+                                                        <?php
+                                                        }
+                                                    ?>
                                                     
                                                     </div>
                                             </div>
                                             <?php
-                                        }
-                                        
+                                        }                                        
+                                    }
+                                    else {
+
                                     }
                                 ?>
                                 </section>
@@ -227,6 +355,15 @@
 			</div>
 
 		
-
+        <script>
+            function resetPassword() {
+                if(confirm('비밀번호를 초기화 하시겠습니까?')) {
+                    $('#password').val('1234');
+                }
+            }
+        </script>
 	</body>
 </html>
+
+
+

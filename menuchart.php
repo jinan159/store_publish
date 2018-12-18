@@ -43,13 +43,6 @@
 							<!-- Header -->
 								<header id="header">
 									<a href="index.php" class="logo"><strong>WebPos</strong> by Jinwan</a>
-									<!-- <ul class="icons">
-										<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-										<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-										<li><a href="#" class="icon fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
-										<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-										<li><a href="#" class="icon fa-medium"><span class="label">Medium</span></a></li>
-									</ul> -->
 								</header>
                             <?php
                                 $mode = "menu";
@@ -65,25 +58,6 @@
                                             </div>
                                             <div class="container" >
                                                 <div class="chart" id="chart_div">
-                                                <!-- <form action="./index.php?reload=o-stat" method="get">
-                                                <input type="hidden" name="reload" value="o-stat">
-                                                <div class="container" style="width: 1000px; min-width: 300px;">
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <div class="chart" id="chart_div">
-                                                            </div>	
-                                                            <div class="input-group date">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text">시작 날짜/끝 날짜</span>
-                                                                </div>
-                                                                <input type="date" class="form-control" id="startDate" name="startDate">
-                                                                <input type="date" class="form-control" id="endDate" name="endDate">
-                                                                <input type="submit" value="검색" >	 
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                </form> -->
                                                 </div>
                                             </div>
                                         </div>

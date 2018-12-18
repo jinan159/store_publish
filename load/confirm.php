@@ -71,10 +71,11 @@
                         <th>시간</th>
                         <th>메뉴이름</th>
                         <th>수량</th>
+                        <th>가격</th>
                     </tr>
                     <?php
 
-                    $sql = " SELECT od.order_num onum, o.order_time time, m.mname mname, od.count count, od.price price, o.email email";
+                    $sql = " SELECT o.order_time time, m.mname mname, od.count count, od.price price";
                     $sql .= " FROM webpos.order_detail od JOIN webpos.order o ";
                     $sql .= " ON (od.order_num=o.order_num) JOIN webpos.menu m ";
                     $sql .= " ON (od.menu_id=m.menu_id) ";
@@ -89,6 +90,7 @@
                         <td><?=$row['time']?></td>
                         <td><?=$row['mname']?></td>
                         <td><?=$row['count']?></td>
+                        <td><?=$row['price']?></td>
                     </tr>
                     <?php
                     }
@@ -101,14 +103,24 @@
             ?>
             <div class="menu">
                 <h1>주문 확인</h1>
-                <table>
-                    <tr>
+                <table align="center">
+                    <?php
+                        $sql = " SELECT o.email, u.name name "; 
+                        $sql .= " FROM webpos.order o JOIN webpos.user u ";
+                        $sql .= " ON (o.email = u.email) ";
+                        $sql .= " WHERE o.order_num='$order_num' ";
+
+                        $result = $dbconn->query($sql);
+                        
+                        $row = $result->fetch_array();
+                    ?>
+                    <!-- <tr>
                         <th>대기 순번</th>
                         <td colspan="2"><span id="result"></span></td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <th>주문자</th>
-                        <td colspan="2"><?=$row['email']?></td>
+                        <td colspan="2"><?=$row['email']?><br>(<?=$row['name']?>)</td>
                     </tr>
                     <tr>
                         <th>주문 번호</th>
@@ -123,6 +135,14 @@
                         <th>수량</th>
                     </tr>
                     <?php
+                    $sql = " SELECT o.order_time time, m.mname mname, od.count count, od.price price";
+                    $sql .= " FROM webpos.order_detail od JOIN webpos.order o ";
+                    $sql .= " ON (od.order_num=o.order_num) JOIN webpos.menu m ";
+                    $sql .= " ON (od.menu_id=m.menu_id) ";
+                    $sql .= " WHERE od.order_num='$order_num' ";
+                    $sql .= " ORDER BY o.order_time ASC; ";
+
+                    $result = $dbconn->query($sql);
                     while ($row=$result->fetch_array()) { 
                     ?>
                     <tr>
@@ -145,11 +165,18 @@
             <a href="../index.php" class="submit-btn secondary">메인으로 돌아가기</a>
             <a href="../index.php?reload=<?=$from?>" class="submit-btn secondary">이전으로</a>
         </div>
+        
+        
+
     <script>
-        var source = new EventSource("../process/load_cur_wait.php?order_num=<?=$order_num?>&store_id=<?=$store_id?>");
-        source.addEventListener("message",function(e) {
-            document.getElementById("result").innerHTML = e.data; 
-        });
+        // var source = new EventSource("../process/load_cur_wait.php?order_num=<?=$order_num?>&store_id=<?=$store_id?>");
+        // source.addEventListener("message",function(e) {
+        //     alert(e.data);
+        //     var data = JSON.parse(e.data)
+        //     alert(data);
+        //     alert(data);
+        //     document.getElementById("result").innerHTML = data;
+        // });
     </script>
 </body>
 

@@ -26,7 +26,7 @@
 		}
 		
 	
-		$sql = " SELECT mname, sum(od.price) sum, m.store_id ";
+		$sql = " SELECT mname, sum(od.count*od.price) sum, m.store_id ";
 		$sql .= " FROM webpos.order_detail od JOIN webpos.menu m ";
 		$sql .= " ON od.menu_id=m.menu_id ";
 		$sql .= " WHERE m.store_id='$store_id' ";
@@ -48,6 +48,15 @@
 		
 	} //end if($mode=menu)
 	else if($mode=="date") {
+		if(isset($_POST['store_id'])) {
+			$store_id=$_POST['store_id'];
+			$sql = " SELECT * FROM webpos.store WHERE store_id='$store_id' ;";
+			$result = $dbconn->query($sql);
+			$tmpRow=$result->fetch_array();
+			$sname=$tmpRow['sname'];
+		}
+
+
 		$data = array(
 			array('메뉴','매출'),
 		);
@@ -61,6 +70,7 @@
 				'width' => 350, 'height' => 250
 			);
 		}
+		
 
 		$start;
 		$end;
@@ -75,9 +85,9 @@
 		$end->modify('+1 day');
 	
 		$startDate = date_format($start, 'Y-m-d');
-		$endDate = date_format($end, 'Y-m-d');		
+		$endDate = date_format($end, 'Y-m-d');	
 	
-		$sql = " SELECT DATE_FORMAT(o.order_time, '%Y-%m-%d') order_time, o.store_id, sum(od.price) sum ";
+		$sql = " SELECT DATE_FORMAT(o.order_time, '%Y-%m-%d') order_time, o.store_id, sum(od.count*od.price) sum ";
 		$sql .= " FROM webpos.order o JOIN webpos.order_detail od ";
 		$sql .= " ON (o.order_num=od.order_num) ";
 		$sql .= " WHERE o.store_id='$store_id' ";
@@ -100,5 +110,57 @@
 		$data = json_encode($data);
 		$options = json_encode($options);
 	
-	}
+	}//end if($mode=date)
+	else if($mode=='admin-date') {
+		$data = array(
+			array('메뉴','매출'),
+		);
+		$options = array(
+			'title' => "'WEBPOS' 통계 차트",
+			'width' => 800, 'height' => 500
+		);
+		if(detectDevice()=="Mobile") {
+			$options = array(
+				'title' => "'WEBPOS' 통계 차트",
+				'width' => 350, 'height' => 250
+			);
+		}
+
+		$start;
+		$end;
+		if(isset($_POST['startDate']) && isset($_POST['endDate'])) {
+			$start = new DateTime($_POST['startDate']);
+			$end = new DateTime($_POST['endDate']);
+		}else {
+			$start = new DateTime();
+			$end = new DateTime();
+		}
+		$start->modify('-1 day');
+		$end->modify('+1 day');
+	
+		$startDate = date_format($start, 'Y-m-d');
+		$endDate = date_format($end, 'Y-m-d');		
+	
+		$sql = " SELECT DATE_FORMAT(o.order_time, '%Y-%m-%d') order_time, sum(od.count*od.price) sum ";
+		$sql .= " FROM webpos.order o JOIN webpos.order_detail od ";
+		$sql .= " ON (o.order_num=od.order_num) ";
+		$sql .= " GROUP BY (DATE_FORMAT(o.order_time, '%Y-%m-%d')) ";
+		$sql .= " HAVING order_time>'$startDate' AND order_time<'$endDate'; ";
+	
+		$result = $dbconn->query($sql);
+		
+		while($row=$result->fetch_array()) {
+			$sum = $row['sum'];
+			$temp = array($row['order_time'], intval($sum));  
+			
+			array_push($data, $temp);
+		}
+		if(count($data)==1) {
+			$temp = array('',0);  
+			array_push($data, $temp);
+		}
+
+		$data = json_encode($data);
+		$options = json_encode($options);
+	}//end if($mode=admin-date)
 ?>

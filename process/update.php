@@ -1,4 +1,7 @@
-<?php 
+<?php session_start();
+
+    echo "<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'>";
+
     include_once "dbconn.php";
 
     if(isset($_GET['mode'])) {
@@ -47,6 +50,76 @@
                 }
             }     
             echo "<script>location.href='../index.php?reload=a-store-manage'</script>";
+            
+        }else if($mode=="user") {
+            $email = $_POST['email'];
+            $s_email = $_SESSION['s_email'];
+            //관리자가 아닌사람이 자신의 아이디가 아닌 아이디로 
+            // 접근하려할때 막음
+            if($email!=$s_email) {
+                if(!isset($_SESSION['s_grade']) || $_SESSION['s_grade']!=99) {
+                    echo "<script>alert('비정상적인 접근입니다.');</script>";
+                    echo "<script>location.href='index.php';</script>";
+                }
+            }
+            $password = $_POST['password'];
+            $password = md5($password);
+            $name = $_POST['name'];
+            $tel = $_POST['tel'];
+            $address = $_POST['address'];
+
+            $sql = " UPDATE webpos.user "; 
+            $sql .= " SET name = '$name', "; 
+            $sql .= " tel = '$tel', "; 
+            $sql .= " address = '$address' "; 
+            $sql .= " WHERE webpos.user.email = '$email' LIMIT 1;";
+            if($dbconn->query($sql)===TRUE) {
+                echo "<script>console.log('success');</script>";
+                if($_SESSION['s_grade']==99) {
+                    echo "<script>location.href='../index.php?reload=a-user-manage'</script>";
+                }else {
+                    echo "<script>location.href='../index.php'</script>";
+                }
+                
+            }else {
+                echo $dbconn->error;
+                exit;
+            }
+            
+        }else if($mode=="owner") {
+            $email = $_POST['email'];
+            $s_email = $_SESSION['s_email'];
+            //관리자가 아닌사람이 자신의 아이디가 아닌 아이디로 
+            // 접근하려할때 막음
+            if($email!=$s_email) {
+                if(!isset($_SESSION['s_grade']) || $_SESSION['s_grade']!=99) {
+                    echo "<script>alert('비정상적인 접근입니다.');</script>";
+                    echo "<script>location.href='index.php';</script>";
+                }
+            }
+            $password = $_POST['password'];
+            $password = md5($password);
+            $name = $_POST['oname'];
+            $tel = $_POST['tel'];
+            $address = $_POST['address'];
+
+            $sql = " UPDATE webpos.owner "; 
+            $sql .= " SET oname = '$name', ";
+            $sql .= " tel = '$tel', "; 
+            $sql .= " address = '$address' "; 
+            $sql .= " WHERE webpos.owner.email = '$email' LIMIT 1;";
+            if($dbconn->query($sql)===TRUE) {
+                echo "<script>console.log('success');</script>";
+                if($_SESSION['s_grade']==99) {
+                    echo "<script>location.href='../index.php?reload=a-owner-manage'</script>";
+                }else {
+                    echo "<script>location.href='../index.php'</script>";
+                }
+                
+            }else {
+                echo $dbconn->error;
+                exit;
+            }
             
         }
     }

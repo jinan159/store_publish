@@ -62,12 +62,13 @@
                     <td><span id="price<?= $index ?>"><?= $row['price'] ?></span></td>
                     <td>
                         <select onchange="calcTotal()" name="count[]" id="count<?= $index ?>" style="min-width:90px;">
-                            <option value="0">0개</option>
-                            <option value="1">1개</option>
-                            <option value="2">2개</option>
-                            <option value="3">3개</option>
-                            <option value="4">4개</option>
-                            <option value="5">5개</option>
+                        <?php
+                            for($i=0; $i<=10; $i++) {
+                                ?>
+                                <option value="<?=$i?>"><?=$i?>개</option>    
+                                <?php
+                            }
+                        ?>
                         </select>
                     </td>
                     
