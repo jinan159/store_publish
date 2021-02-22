@@ -1,4 +1,4 @@
-![header](https://capsule-render.vercel.app/api?type=cylinder&color=gradient&height=250&section=header&text=WEB%20POS%20Project&fontSize=70)
+![header](https://capsule-render.vercel.app/api?type=cylinder&color=gradient&height=150&section=header&text=WEB%20POS%20Project&fontSize=40)
 
 ### 📅 When?
 > 2018.12.03 ~ 2018.12.19 : 3학년 2학기 웹프로그래밍Ⅱ 기말과제
